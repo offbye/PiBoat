@@ -13,6 +13,8 @@ __author__ = ['"Xitao":<offbye@gmail.com>']
 from SocketServer import ThreadingTCPServer, StreamRequestHandler
 import traceback
 import threading
+from pi_pwm import  PiPWM
+
 
 timer_interval = 2
 
@@ -33,6 +35,7 @@ class MyStreamRequestHandlerr(StreamRequestHandler):
                     print("---" + data.upper())
                 elif data[0:2] == "s1":
                     print("---" + data.upper())
+                    pwm.servo1_set(10)
 
             except:
                 traceback.print_exc()
@@ -56,6 +59,8 @@ if __name__ == "__main__":
     host = ""  # 主机名，可以是ip,像localhost的主机名,或""
     port = 9999  # 端口
     addr = (host, port)
+
+    pwm = PiPWM()
 
     # ThreadingTCPServer从ThreadingMixIn和TCPServer继承
     #class ThreadingTCPServer(ThreadingMixIn, TCPServer): pass
