@@ -42,4 +42,12 @@ public class ControllerManager {
         }
     }
 
+    public void shutDown() {
+        if (clientThread != null) {
+            clientThread.shutDown();
+        } else {
+            L.e("client thread is null");
+        }
+    }
+
 }
