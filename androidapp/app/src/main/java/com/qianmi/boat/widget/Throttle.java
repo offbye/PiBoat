@@ -10,18 +10,16 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.qianmi.boat.R;
-import com.qianmi.boat.utils.L;
 
 /**
  * Created by Chen Haitao on 2015/8/21.
  */
-public class Controller extends View {
+public class Throttle extends View {
 
     private Context mContext;
     private Paint mPaint;
     private Bitmap mBg;
-    private Bitmap mReadyPoint;
-    private Bitmap mTouchPoint;
+    private Bitmap mThrottle;
     private int[] mPosInit;
     private int[] mPosCurrent;
     private int mWidth;
@@ -37,19 +35,13 @@ public class Controller extends View {
     private static final int STATUS_UP = 4;
     private static final int STATUS_END = 5;
 
-    public static final int DIRECTION_LEFT = 100;
-    public static final int DIRECTION_RIGHT = 101;
-    public static final int DIRECTION_UP = 102;
-    public static final int DIRECTION_DOWN = 103;
+    private ThrottleTrigger mTrigger;
 
-    private Trigger mTrigger;
-
-    public Controller(Context context) {
+    public Throttle(Context context) {
         this(context, null);
-
     }
 
-    public Controller(Context context, AttributeSet attrs) {
+    public Throttle(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         mContext = context;
@@ -57,12 +49,8 @@ public class Controller extends View {
         mPosCurrent = new int[2];
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        mBg = BitmapFactory.decodeResource(getResources(), R.drawable.bg_m);
-        L.d("(bg)width:" + mBg.getWidth() + ", height: " + mBg.getHeight());
-        mReadyPoint = BitmapFactory.decodeResource(getResources(), R.drawable.ready_point);
-        L.d("(readyPoint)width:" + mReadyPoint.getWidth() + ", height: " + mReadyPoint.getHeight());
-        mTouchPoint = BitmapFactory.decodeResource(getResources(), R.drawable.touch_point);
-        L.d("(touchPoint)width:" + mTouchPoint.getWidth() + ", height: " + mTouchPoint.getHeight());
+        mBg = BitmapFactory.decodeResource(getResources(), R.drawable.d);
+        mThrottle = BitmapFactory.decodeResource(getResources(), R.drawable.fxp);
 
         status = STATUS_INIT;
     }
@@ -72,10 +60,9 @@ public class Controller extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         mWidth = w;
         mHeight = h;
-        L.d("width:" + mWidth + ", height: " + mHeight);
     }
 
-       @Override
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
 
         int action = event.getAction();
@@ -98,27 +85,27 @@ public class Controller extends View {
                     mPosCurrent[1] = (int) event.getY();
                     postInvalidate();
 
-                    if (mPosCurrent[0] < mWidth / 5) {
-                        if (actionValidate && mTrigger != null) {
-                            mTrigger.onTrigger(DIRECTION_LEFT);
-                            actionValidate = false;
-                        }
-                    }else if (mPosCurrent[0] > mWidth * 4 / 5) {
-                        if (actionValidate && mTrigger != null) {
-                            mTrigger.onTrigger(DIRECTION_RIGHT);
-                            actionValidate = false;
-                        }
-                    }else if (mPosCurrent[1] < mHeight / 5) {
-                        if (actionValidate && mTrigger != null) {
-                            mTrigger.onTrigger(DIRECTION_UP);
-                            actionValidate = false;
-                        }
-                    }else if (mPosCurrent[1] > mHeight * 4 / 5) {
-                        if (actionValidate && mTrigger != null) {
-                            mTrigger.onTrigger(DIRECTION_DOWN);
-                            actionValidate = false;
-                        }
-                    }
+//                    if (mPosCurrent[0] < mWidth / 5) {
+//                        if (actionValidate && mTrigger != null) {
+//                            mTrigger.onThrottleTrigger(DIRECTION_LEFT);
+//                            actionValidate = false;
+//                        }
+//                    }else if (mPosCurrent[0] > mWidth * 4 / 5) {
+//                        if (actionValidate && mTrigger != null) {
+//                            mTrigger.onThrottleTrigger(DIRECTION_RIGHT);
+//                            actionValidate = false;
+//                        }
+//                    }else if (mPosCurrent[1] < mHeight / 5) {
+//                        if (actionValidate && mTrigger != null) {
+//                            mTrigger.onThrottleTrigger(DIRECTION_UP);
+//                            actionValidate = false;
+//                        }
+//                    }else if (mPosCurrent[1] > mHeight * 4 / 5) {
+//                        if (actionValidate && mTrigger != null) {
+//                            mTrigger.onThrottleTrigger(DIRECTION_DOWN);
+//                            actionValidate = false;
+//                        }
+//                    }
 
                 }
 
@@ -144,25 +131,25 @@ public class Controller extends View {
         super.onDraw(canvas);
         switch (status) {
             case STATUS_INIT:
-                canvas.drawBitmap(mBg, 20, 20, mPaint);
-                canvas.drawBitmap(mReadyPoint, mWidth / 2 - mReadyPoint.getWidth() /2 , mHeight / 2  -  mReadyPoint.getHeight() /2 , mPaint);
+                canvas.drawBitmap(mBg, 0, 0, mPaint);
+                canvas.drawBitmap(mThrottle, mWidth / 2 - mThrottle.getWidth() /2 , mHeight / 2  -  mThrottle.getHeight() /2 , mPaint);
                 break;
 
             case STATUS_DOWN:
                 canvas.drawBitmap(mBg, 20, 20, mPaint);
-                canvas.drawBitmap(mTouchPoint, mWidth / 2 - mTouchPoint.getWidth() /2 , mHeight / 2  -  mTouchPoint.getHeight() /2 , mPaint);
+//                canvas.drawBitmap(mTouchPoint, mWidth / 2 - mTouchPoint.getWidth() /2 , mHeight / 2  -  mTouchPoint.getHeight() /2 , mPaint);
 
                 break;
 
             case STATUS_MOVE:
                 canvas.drawBitmap(mBg, 20, 20, mPaint);
-                canvas.drawBitmap(mTouchPoint, mPosCurrent[0] - mTouchPoint.getWidth() /2 , mPosCurrent[1]  -  mTouchPoint.getHeight() /2 , mPaint);
+//                canvas.drawBitmap(mTouchPoint, mPosCurrent[0] - mTouchPoint.getWidth() /2 , mPosCurrent[1]  -  mTouchPoint.getHeight() /2 , mPaint);
                 break;
 
             case STATUS_UP:
                 canvas.drawBitmap(mBg, 20, 20, mPaint);
                 canvas.drawBitmap(mBg, 20, 20, mPaint);
-                canvas.drawBitmap(mReadyPoint, mWidth / 2 - mReadyPoint.getWidth() /2 , mHeight / 2  -  mReadyPoint.getHeight() /2 , mPaint);
+//                canvas.drawBitmap(mReadyPoint, mWidth / 2 - mReadyPoint.getWidth() /2 , mHeight / 2  -  mReadyPoint.getHeight() /2 , mPaint);
                 break;
 
             case STATUS_END:
@@ -173,15 +160,16 @@ public class Controller extends View {
         }
     }
 
-    public void setTrigger(Trigger trigger) {
+    public void setThrottleTrigger(ThrottleTrigger trigger) {
         this.mTrigger = trigger;
     }
 
-    public void removeTrigger() {
+    public void removeThrottleTrigger() {
         this.mTrigger = null;
     }
 
-    public interface Trigger {
-        void onTrigger(int direction);
+    public interface ThrottleTrigger {
+        void onThrottleTrigger(int direction);
     }
+
 }
