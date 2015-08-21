@@ -71,11 +71,11 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.check)
     public void onClickCheck(View view) {
-        startActivity(new Intent(MainActivity.this, CheckActivity.class));
+        startActivity(new Intent(MainActivity.this, SettingsActivity.class));
     }
 
     @OnClick(R.id.settings)
     public void onClickSetting(View view) {
-        startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+        startActivity(new Intent(MainActivity.this, CheckActivity.class));
     }
 }
