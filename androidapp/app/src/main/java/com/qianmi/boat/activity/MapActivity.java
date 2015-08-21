@@ -1,8 +1,10 @@
 package com.qianmi.boat.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -24,13 +26,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by su on 2015/8/21.
  */
-public class MapActivity extends Activity {
+public class MapActivity extends AppCompatActivity {
+
+    @Bind(R.id.btn_loc)
+    RelativeLayout btnLoc;
 
     private String Tag = "MapActivity";
     private LatLng lastLatLng;
+
+    private BDLocation curLocation;
 
     LocationClient mLocClient;
     public MyLocationListenner myListener = new MyLocationListenner();
@@ -46,10 +56,12 @@ public class MapActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        ButterKnife.bind(this);
 
         mCurrentMode = MyLocationConfiguration.LocationMode.FOLLOWING;
 
         initMapAndLoc();
+        addListener();
     }
 
   /*  //测试在地图上画线
@@ -66,7 +78,7 @@ public class MapActivity extends Activity {
         mBaiduMap.addOverlay(ooPolyline);
     }*/
 
-    public void addCustomElementsDemo(LatLng latLng1,LatLng latLng2){
+    public void addCustomElementsDemo(LatLng latLng1, LatLng latLng2) {
         List<LatLng> points = new ArrayList<LatLng>();
         points.add(latLng1);
         points.add(latLng2);
@@ -77,10 +89,10 @@ public class MapActivity extends Activity {
     }
 
     public void addCustomEleemntsDemo(LatLng latLng) {
-        if(lastLatLng == null) {
+        if (lastLatLng == null) {
             lastLatLng = latLng;
             return;
-        }else {
+        } else {
             addCustomElementsDemo(lastLatLng, latLng);
             lastLatLng = latLng;
         }
@@ -97,17 +109,18 @@ public class MapActivity extends Activity {
             // map view 销毁后不在处理新接收的位置
             if (location == null || mMapView == null)
                 return;
-            MyLocationData locData = new MyLocationData.Builder()
+            curLocation = location;
+           /* MyLocationData locData = new MyLocationData.Builder()
                     .accuracy(location.getRadius())
                             // 此处设置开发者获取到的方向信息，顺时针0-360
                     .direction(100).latitude(location.getLatitude())
                     .longitude(location.getLongitude()).build();
-            mBaiduMap.setMyLocationData(locData);
-            if(isFirstCanvas) {
+            mBaiduMap.setMyLocationData(locData);*/
+            if (isFirstCanvas) {
                 if (location.getLatitude() > 10 && location.getLongitude() > 10) {
 //                    isFirstCanvas = false;
-                   // addCustomElementsDemo((location.getLatitude()), (location.getLongitude()));
-                    addCustomEleemntsDemo(new LatLng(location.getLatitude()+ (5+new Random().nextInt(10))/100f, location.getLongitude()+(5+new Random().nextInt(10))/100f));
+                    // addCustomElementsDemo((location.getLatitude()), (location.getLongitude()));
+                    addCustomEleemntsDemo(new LatLng(location.getLatitude() + (5 + new Random().nextInt(10)) / 100f, location.getLongitude() + (5 + new Random().nextInt(10)) / 100f));
                     Log.v(Tag, "location = " + location.getLatitude() + "  唯独" + location.getLongitude());
                 }
             }
@@ -145,6 +158,24 @@ public class MapActivity extends Activity {
                 .setMyLocationConfigeration(new MyLocationConfiguration(
                         mCurrentMode, true, mCurrentMarker));
 
+    }
+
+    private void addListener() {
+       // btnLoc.
+        btnLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (curLocation == null) {
+                    return;
+                }
+                MyLocationData locData = new MyLocationData.Builder()
+                        .accuracy(curLocation.getRadius())
+                                // 此处设置开发者获取到的方向信息，顺时针0-360
+                        .direction(100).latitude(curLocation.getLatitude())
+                        .longitude(curLocation.getLongitude()).build();
+                mBaiduMap.setMyLocationData(locData);
+            }
+        });
     }
 
 

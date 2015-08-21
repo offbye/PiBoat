@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.qianmi.boat.activity.CheckActivity;
 import com.qianmi.boat.activity.ControllerActivity;
 import com.qianmi.boat.activity.MapActivity;
 import com.qianmi.boat.activity.SettingsActivity;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.check)
     public void onClickCheck(View view) {
-        startActivity(new Intent(MainActivity.this, MainActivity.class));
+        startActivity(new Intent(MainActivity.this, CheckActivity.class));
     }
 
     @OnClick(R.id.settings)
