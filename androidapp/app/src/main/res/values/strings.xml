@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">Controller</string>
+    <string name="app_name">QianMi Boat</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_controller">ControllerActivity</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="title_activity_check">CheckActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 </resources>

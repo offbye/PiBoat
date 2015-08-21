@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/relative_title"
+            android:background="#333333"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/tv_title_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/yellow"
+                android:textSize="@dimen/default_title_font_size"
+                android:layout_marginLeft="30dp"
+                android:text="控制面板"/>
+
+            <TextView
+                android:id="@+id/tv_title_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/red"
+                android:textSize="@dimen/default_title_font_size"
+                android:layout_marginRight="10dp"
+                android:text="0/3[2]"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/linear_cont"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    </LinearLayout>
+</LinearLayout>
