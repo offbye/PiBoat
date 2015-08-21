@@ -58,7 +58,7 @@ public class MapActivity extends AppCompatActivity {
         setContentView(R.layout.activity_map);
         ButterKnife.bind(this);
 
-        mCurrentMode = MyLocationConfiguration.LocationMode.FOLLOWING;
+        mCurrentMode = MyLocationConfiguration.LocationMode.COMPASS;
 
         initMapAndLoc();
         addListener();
