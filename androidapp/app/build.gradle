@@ -5,8 +5,8 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.haitao.controller"
-        minSdkVersion 15
+        applicationId "com.qianmi.boat"
+        minSdkVersion 17
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
