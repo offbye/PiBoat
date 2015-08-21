@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="OCEmzFbp7EA8LOFmUzzMkHnX" />
+            android:value="7pw2eqGoK4IxhcN4GYHaYu4m" />
 
         <activity
             android:name=".MainActivity"
