@@ -1,18 +1,33 @@
 package com.qianmi.boat.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.qianmi.boat.R;
+import com.qianmi.boat.widget.CheckListRelativeLayout;
+
+import java.util.Arrays;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class SettingsActivity extends AppCompatActivity {
+
+    @Bind(R.id.linar_setting1)
+    CheckListRelativeLayout linarSetting1;
+    @Bind(R.id.linar_setting2)
+    CheckListRelativeLayout linarSetting2;
+    @Bind(R.id.linar_setting3)
+    CheckListRelativeLayout linarSetting3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        ButterKnife.bind(this);
+        settData();
     }
 
     @Override
@@ -35,5 +50,12 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void settData() {
+        linarSetting1.setListViews( Arrays.asList("Larry", "Moe", "Curly"));
+        linarSetting2.setListViews( Arrays.asList("Larry", "Curly"));
+        linarSetting3.setListViews( Arrays.asList("Larry", "Moe", "Curly"));
+
     }
 }
