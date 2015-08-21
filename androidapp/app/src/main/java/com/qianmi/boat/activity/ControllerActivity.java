@@ -1,39 +1,49 @@
 package com.qianmi.boat.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.qianmi.boat.R;
+import com.qianmi.boat.utils.L;
+import com.qianmi.boat.widget.Controller;
 
-public class ControllerActivity extends AppCompatActivity {
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class ControllerActivity extends Activity implements Controller.Trigger {
+
+
+    @Bind(R.id.controller_left)
+    Controller mControllerLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_controller);
+        ButterKnife.bind(this);
+        mControllerLeft.setTrigger(this);
+
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_controller, menu);
-        return true;
-    }
+    public void onTrigger(int direction) {
+        switch (direction) {
+            case Controller.DIRECTION_LEFT:
+                L.d("trigger left");
+                break;
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+            case Controller.DIRECTION_RIGHT:
+                L.d("trigger right");
+                break;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            case Controller.DIRECTION_UP:
+                L.d("trigger up");
+                break;
+
+            case Controller.DIRECTION_DOWN:
+                L.d("trigger down");
+                break;
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }
