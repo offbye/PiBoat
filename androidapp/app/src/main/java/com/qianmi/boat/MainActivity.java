@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.qianmi.boat.activity.ControllerActivity;
 import com.qianmi.boat.activity.MapActivity;
-import com.qianmi.boat.activity.NavigationActivity;
 import com.qianmi.boat.activity.SettingsActivity;
 
 import butterknife.ButterKnife;
@@ -36,15 +35,15 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.navi)
     public void onClickNavi(View view) {
-        startActivity(new Intent(MainActivity.this, NavigationActivity.class));
+        startActivity(new Intent(MainActivity.this, MapActivity.class));
     }
 
     @OnClick(R.id.check)
     public void onClickCheck(View view) {
-        startActivity(new Intent(MainActivity.this, MapActivity.class));
+        startActivity(new Intent(MainActivity.this, MainActivity.class));
     }
 
-    @OnClick(R.id.navi)
+    @OnClick(R.id.settings)
     public void onClickSetting(View view) {
         startActivity(new Intent(MainActivity.this, SettingsActivity.class));
     }
