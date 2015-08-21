@@ -22,6 +22,9 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
 
     private static final String TEST_URL = "rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp";
 
+    public static final String EXTRA_IP = "extra_ip";
+    public static final String EXTRA_PORT = "extra_port";
+
     @Bind(R.id.controller_left)
     Controller mControllerLeft;
     @Bind(R.id.video)
@@ -46,6 +49,12 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
         mThrottle.setThrottleTrigger(this);
         mVideoView.setOnPreparedListener(this);
         mVideoView.setOnErrorListener(this);
+        mVideoView.setOnInfoListener(new MediaPlayer.OnInfoListener() {
+            @Override
+            public boolean onInfo(MediaPlayer mp, int what, int extra) {
+                return false;
+            }
+        });
 
         showMsg("初始化...");
     }
