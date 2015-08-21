@@ -1,4 +1,4 @@
-package com.qianmi.boat;
+package com.qianmi.boat.widget;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,6 +8,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.qianmi.boat.R;
 
 /**
  * Created by Chen Haitao on 2015/8/21.

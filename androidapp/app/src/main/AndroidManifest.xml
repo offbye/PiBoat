@@ -16,6 +16,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.ControllerActivity"
+            android:label="@string/title_activity_controller" >
+        </activity>
+        <activity
+            android:name=".activity.NavigationActivity"
+            android:label="@string/title_activity_navigation" >
+        </activity>
+        <activity
+            android:name=".activity.CheckActivity"
+            android:label="@string/title_activity_check" >
+        </activity>
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>
