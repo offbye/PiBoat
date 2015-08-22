@@ -3,6 +3,7 @@ package com.qianmi.boat.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
@@ -57,6 +58,12 @@ public class CheckItemView extends RelativeLayout implements DataChangeListener{
                 }else {
                     onDataChange(1);
                 }
+            }
+        });
+        mTextView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCheckBox.setChecked(!mCheckBox.isChecked());
             }
         });
     }
