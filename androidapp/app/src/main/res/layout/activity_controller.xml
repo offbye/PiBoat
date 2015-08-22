@@ -21,8 +21,19 @@
         android:id="@+id/throttle_right"
         android:layout_width="50dp"
         android:layout_height="100dp"
+        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true" />
+
+    <com.qianmi.boat.widget.ThrottleBar
+        android:id="@+id/throttle_normal"
+        android:layout_width="35dp"
+        android:layout_height="180dp"
+        android:paddingBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:paddingTop="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
 
     <TextView
         android:id="@+id/tv_msg"

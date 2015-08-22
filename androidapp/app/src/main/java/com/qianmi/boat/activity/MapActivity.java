@@ -96,7 +96,9 @@ public class MapActivity extends AppCompatActivity {
         if (lastLatLng == null) {
             lastLatLng = latLng;
             return;
-        } else {
+        } else if((latLng.longitude == lastLatLng.longitude)&&(latLng.latitude == lastLatLng.latitude)) {
+            return;
+        }else {
             addCustomElementsDemo(lastLatLng, latLng);
             lastLatLng = latLng;
         }

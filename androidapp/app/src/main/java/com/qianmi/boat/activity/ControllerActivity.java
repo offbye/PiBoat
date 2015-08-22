@@ -16,11 +16,12 @@ import com.qianmi.boat.utils.ControllerManager;
 import com.qianmi.boat.utils.L;
 import com.qianmi.boat.widget.Controller;
 import com.qianmi.boat.widget.Throttle2;
+import com.qianmi.boat.widget.ThrottleBar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ControllerActivity extends Activity implements Controller.Trigger, Throttle2.ThrottleTrigger, MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
+public class ControllerActivity extends Activity implements Controller.Trigger, Throttle2.ThrottleTrigger, ThrottleBar.ThrottleTrigger,MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
 
     private static final String TEST_URL = "rtsp://192.168.1.101:8554/";
 
@@ -33,6 +34,8 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
     VideoView mVideoView;
     @Bind(R.id.throttle_right)
     Throttle2 mThrottle;
+    @Bind(R.id.throttle_normal)
+    ThrottleBar throttleBar;
     @Bind(R.id.tv_msg)
     TextView mMsg;
     @Bind(R.id.tv_msg_control)
@@ -56,6 +59,7 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
         mContext = this;
         mControllerLeft.setTrigger(this);
         mThrottle.setThrottleTrigger(this);
+        throttleBar.setThrottleTrigger(this);
         mVideoView.setOnPreparedListener(this);
         mVideoView.setOnErrorListener(this);
         mVideoView.setOnInfoListener(new MediaPlayer.OnInfoListener() {
