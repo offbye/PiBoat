@@ -53,7 +53,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void settData() {
-        linarSetting1.setListViews( Arrays.asList("Larry", "Moe", "Curly"));
+        linarSetting1.setTitleName("使用者检查清单");
+        linarSetting1.setListViews( Arrays.asList("相机已连接并打开电源"));
         linarSetting2.setListViews( Arrays.asList("Larry", "Curly"));
         linarSetting3.setListViews( Arrays.asList("Larry", "Moe", "Curly"));
 

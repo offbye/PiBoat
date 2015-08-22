@@ -12,6 +12,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
@@ -36,6 +37,8 @@ public class MapActivity extends AppCompatActivity {
 
     @Bind(R.id.btn_loc)
     RelativeLayout btnLoc;
+    @Bind(R.id.btn_roate)
+    RelativeLayout btnRoate;
 
     private String Tag = "MapActivity";
     private LatLng lastLatLng;
@@ -58,26 +61,11 @@ public class MapActivity extends AppCompatActivity {
         setContentView(R.layout.activity_map);
         ButterKnife.bind(this);
 
-        mCurrentMode = MyLocationConfiguration.LocationMode.COMPASS;
+        mCurrentMode = MyLocationConfiguration.LocationMode.FOLLOWING;
 
         initMapAndLoc();
         addListener();
     }
-
-  /*  //测试在地图上画线
-    public void addCustomElementsDemo(double lat,double lon) {
-        List<LatLng> points = new ArrayList<LatLng>();
-        // 添加折线
-        for(int i=0;i<10;i++){
-            points.add( new LatLng(lat, lon));
-            lat += 0.3;
-            lon += 0.3;
-        }
-        OverlayOptions ooPolyline = new PolylineOptions().width(10)
-                .color(0xAAFF0000).points(points);
-        mBaiduMap.addOverlay(ooPolyline);
-    }*/
-
     public void addCustomElementsDemo(LatLng latLng1, LatLng latLng2) {
         List<LatLng> points = new ArrayList<LatLng>();
         points.add(latLng1);
@@ -174,6 +162,18 @@ public class MapActivity extends AppCompatActivity {
                         .direction(100).latitude(curLocation.getLatitude())
                         .longitude(curLocation.getLongitude()).build();
                 mBaiduMap.setMyLocationData(locData);
+
+               /* MapStatus ms = new MapStatus.Builder(mBaiduMap.getMapStatus()).rotate(0).build();
+                MapStatusUpdate u = MapStatusUpdateFactory.newMapStatus(ms);
+                mBaiduMap.animateMapStatus(u);*/
+            }
+        });
+        btnRoate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MapStatus ms = new MapStatus.Builder(mBaiduMap.getMapStatus()).rotate(0).build();
+                MapStatusUpdate u = MapStatusUpdateFactory.newMapStatus(ms);
+                mBaiduMap.animateMapStatus(u);
             }
         });
     }

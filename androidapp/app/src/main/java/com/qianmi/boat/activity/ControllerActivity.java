@@ -2,10 +2,12 @@ package com.qianmi.boat.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -20,7 +22,7 @@ import butterknife.ButterKnife;
 
 public class ControllerActivity extends Activity implements Controller.Trigger, Throttle2.ThrottleTrigger, MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
 
-    private static final String TEST_URL = "rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp";
+    private static final String TEST_URL = "rtsp://192.168.1.101:8554/";
 
     public static final String EXTRA_IP = "extra_ip";
     public static final String EXTRA_PORT = "extra_port";
@@ -33,10 +35,16 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
     Throttle2 mThrottle;
     @Bind(R.id.tv_msg)
     TextView mMsg;
+    @Bind(R.id.tv_msg_control)
+    TextView mMsgControl;
 
     private Context mContext;
     private int mVHeight;
     private int mVWidth;
+    private Handler mInHandler;
+    private Handler mOutHandler;
+    private String ip;
+    private int port;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,7 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
 
         setContentView(R.layout.activity_controller);
         ButterKnife.bind(this);
+        initHandler();
         mContext = this;
         mControllerLeft.setTrigger(this);
         mThrottle.setThrottleTrigger(this);
@@ -63,14 +72,64 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
             }
         });
 
+        Intent intent = getIntent();
+        if (intent != null) {
+            ip = intent.getStringExtra(EXTRA_IP);
+            port = Integer.parseInt(intent.getStringExtra(EXTRA_PORT));
+        }
+
         showMsg("初始化...");
+    }
+
+    private void initHandler() {
+        mInHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                try {
+                    if (msg.obj != null) {
+                        String s = msg.obj.toString();
+                        if (s.trim().length() > 0) {
+                            mMsgControl.setText(s);
+                        } else {
+                            L.d("没有数据返回不更新");
+                        }
+                    }
+
+                } catch (Exception e2) {
+                    e2.printStackTrace();
+                }
+            }
+        };
+
+        mOutHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                try {
+                    if (msg.obj != null) {
+                        String s = msg.obj.toString();
+                        if (msg.what == 1) {
+                            mMsgControl.setText(s + "      发送成功");
+                        } else {
+                            mMsgControl.setText(s + "      发送失败");
+                        }
+                    }
+
+                } catch (Exception e2) {
+                    e2.printStackTrace();
+                }
+            }
+        };
+    }
+
+    private void connect(String ip, int port) {
+        ControllerManager.getInstance(mContext).connectServer(ip, port, mContext, mInHandler, mOutHandler);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mVideoView.pause();
-        ControllerManager.getInstance(mContext).shutDown();
+        ControllerManager.getInstance(mContext).stopConnect();
     }
 
     @Override
@@ -79,7 +138,6 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
             case Controller.DIRECTION_LEFT:
                 L.d("trigger left");
                 L.d("connect the server ....");
-                ControllerManager.getInstance(mContext).connectServer("192.168.43.2", 9999);
                 break;
 
             case Controller.DIRECTION_RIGHT:
