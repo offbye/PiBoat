@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
 class PiPWM():
     def __init__(self):
-        GPIO.setmode(GPIO.BCM)
+        GPIO.setmode(GPIO.BOARD)
         GPIO.setup(12, GPIO.OUT)
         GPIO.setup(18, GPIO.OUT)
 
@@ -49,19 +49,19 @@ class PiPWM():
 
     def motor_set(self, percent):
         if 0 < percent < 100:
-            speed_percent = 5 + 2 * (percent / 100)
+            speed_percent = 5 + 5 * (percent / 100)
             print(speed_percent)
             self.m1.ChangeDutyCycle(speed_percent)
             print("motor_set: " + str(speed_percent))
 
-            time.sleep(0.02)
+            time.sleep(0.05)
             return "ok"
         else:
             return "invalid percent"
 
     def servo1_set(self, percent):
         if 0 < percent < 100:
-            speed_percent = 4 + 6 * (percent / 100)
+            speed_percent = 4 + 8 * (percent / 100)
             self.s1.ChangeDutyCycle(speed_percent)
             time.sleep(1)
             print("servo1_set: " + str(speed_percent))
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     pwm1 = PiPWM()
     try:
         while 1:
-            time.sleep(2)
+            time.sleep(1)
             i = float(raw_input("speed?(5-10)"))
             pwm1.servo1_set(i)
             print("------" + str(i))
