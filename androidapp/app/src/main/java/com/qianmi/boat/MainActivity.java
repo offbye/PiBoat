@@ -14,6 +14,7 @@ import com.qianmi.boat.activity.ControllerActivity;
 import com.qianmi.boat.activity.MapActivity;
 import com.qianmi.boat.activity.SettingsActivity;
 import com.qianmi.boat.utils.L;
+import com.qianmi.boat.utils.SPUtils;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -44,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
         mDialog = new AlertDialog.Builder(MainActivity.this).create();
         mDialog.show();
         mDialog.getWindow().setContentView(R.layout.input_url);
+        EditText ipV = (EditText) mDialog.getWindow().findViewById(R.id.host);
+        ipV.setText((String)SPUtils.get(mContext, "ip", ""));
+        EditText portV = (EditText) mDialog.getWindow().findViewById(R.id.port);
+        portV.setText(String.valueOf((int) SPUtils.get(mContext, "port", 9999)));
         mDialog.getWindow()
                 .findViewById(R.id.connect)
                 .setOnClickListener(new View.OnClickListener() {
