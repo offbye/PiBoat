@@ -33,6 +33,8 @@ class MyStreamRequestHandlerr(StreamRequestHandler):
                     self.wfile.write(get_gps())
                 elif data[0:2] == "m1":
                     print("---" + data.upper())
+                    pwm.motor_set(float(data.split(",")[1]))
+
                 elif data[0:2] == "s1":
                     print("---" + data.upper())
                     pwm.servo1_set(10)

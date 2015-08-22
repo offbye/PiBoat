@@ -12,7 +12,7 @@ __author__ = ['"Xitao":<offbye@gmail.com>']
 
 from socket import *
 
-host = '127.0.0.1'
+host = '172.19.3.67'
 port = 9999
 bufsize = 1024
 addr = (host, port)
