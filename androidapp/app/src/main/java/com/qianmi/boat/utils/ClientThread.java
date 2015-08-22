@@ -44,7 +44,7 @@ public class ClientThread extends Thread {
     public void conn() {
 
         try {
-            L.i("连接中……");
+            L.d("连接中……");
             s = new Socket(ip, port);
             s.setSoTimeout(timeout);// 设置阻塞时间
             s.setKeepAlive(true);

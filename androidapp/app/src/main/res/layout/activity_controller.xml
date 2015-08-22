@@ -27,26 +27,25 @@
     <TextView
         android:id="@+id/tv_msg"
         android:layout_width="400dp"
-        android:layout_height="30dp"
+        android:layout_height="15dp"
         android:background="@android:color/transparent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="test"
+        android:text="helo"
         android:gravity="center_horizontal"
         android:textColor="@android:color/holo_green_light"
-        android:textSize="20sp"/>
+        android:textSize="10sp"/>
 
     <TextView
         android:id="@+id/tv_msg_control"
         android:layout_width="400dp"
-        android:layout_height="30dp"
+        android:layout_height="15dp"
         android:background="@android:color/transparent"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/tv_msg"
         android:text="test"
         android:gravity="center_horizontal"
         android:textColor="@android:color/holo_orange_light"
-        android:textSize="20sp"/>
+        android:textSize="10sp"/>
 
 </RelativeLayout>

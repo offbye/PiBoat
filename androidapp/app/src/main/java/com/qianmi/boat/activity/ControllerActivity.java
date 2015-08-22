@@ -2,6 +2,7 @@ package com.qianmi.boat.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ import butterknife.ButterKnife;
 
 public class ControllerActivity extends Activity implements Controller.Trigger, Throttle2.ThrottleTrigger, MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
 
-    private static final String TEST_URL = "rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp";
+    private static final String TEST_URL = "rtsp://192.168.1.101:8554/";
 
     public static final String EXTRA_IP = "extra_ip";
     public static final String EXTRA_PORT = "extra_port";
@@ -42,6 +43,8 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
     private int mVWidth;
     private Handler mInHandler;
     private Handler mOutHandler;
+    private String ip;
+    private int port;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,12 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
                 return true;
             }
         });
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            ip = intent.getStringExtra(EXTRA_IP);
+            port = Integer.parseInt(intent.getStringExtra(EXTRA_PORT));
+        }
 
         showMsg("初始化...");
     }
@@ -112,6 +121,10 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
         };
     }
 
+    private void connect(String ip, int port) {
+        ControllerManager.getInstance(mContext).connectServer(ip, port, mContext, mInHandler, mOutHandler);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -125,7 +138,6 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
             case Controller.DIRECTION_LEFT:
                 L.d("trigger left");
                 L.d("connect the server ....");
-                ControllerManager.getInstance(mContext).connectServer("192.168.43.2", 9999, mContext, mInHandler, mOutHandler);
                 break;
 
             case Controller.DIRECTION_RIGHT:
