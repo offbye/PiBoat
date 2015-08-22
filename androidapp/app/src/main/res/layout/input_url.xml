@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:layout_margin="20dp"
     android:orientation="vertical"
+    android:background="@android:color/white"
     tools:context="com.qianmi.boat.activity.ControllerActivity">
 
     <TextView

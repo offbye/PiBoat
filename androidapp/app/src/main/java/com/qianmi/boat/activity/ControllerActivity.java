@@ -121,8 +121,14 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
         };
     }
 
-    private void connect(String ip, int port) {
-        ControllerManager.getInstance(mContext).connectServer(ip, port, mContext, mInHandler, mOutHandler);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        connect(ip, port);
+    }
+
+    private void connect(String i, int p) {
+        ControllerManager.getInstance(mContext).connectServer(i, p, mContext, mInHandler, mOutHandler);
     }
 
     @Override
@@ -149,7 +155,8 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
             case Controller.DIRECTION_UP:
                 L.d("trigger up");
                 L.d("play rtsp");
-                playRtspStream(TEST_URL);
+                String url = "rtsp://" + ip + ":8554/";
+                playRtspStream(url);
                 break;
 
             case Controller.DIRECTION_DOWN:
@@ -159,6 +166,7 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
     }
 
     private void playRtspStream(String rtspUrl){
+        L.d("display url : " + rtspUrl);
         mVideoView.setVideoURI(Uri.parse(rtspUrl));
         mVideoView.requestFocus();
         mVideoView.start();
