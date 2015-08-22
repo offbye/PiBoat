@@ -27,8 +27,7 @@ public class ClientThread extends Thread {
 
     @Override
     public void run() {
-        try
-        {
+        try {
             L.d("creating socket..");
             s = new Socket(ip, port);
             s.setSoTimeout(5000);
@@ -40,9 +39,7 @@ public class ClientThread extends Thread {
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
                     s.getOutputStream())), true);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -54,9 +51,17 @@ public class ClientThread extends Thread {
 
     public void shutDown() {
         try {
-            in.close();
-            out.close();
-            s.close();
+            if (in != null) {
+                in.close();
+            }
+            if (out != null) {
+                out.close();
+            }
+            if (s != null && !s.isClosed()) {
+                s.close();
+                s = null;
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,8 +70,7 @@ public class ClientThread extends Thread {
 
     public void setMsg(String msg) {
         // Send data.
-        if ( s.isClosed( ) || s.isOutputShutdown( ) )
-        {
+        if (s.isClosed() || s.isOutputShutdown()) {
             L.e("socket is closed");
             return;
         }

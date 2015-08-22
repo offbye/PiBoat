@@ -28,6 +28,8 @@ public class ControllerManager {
         try {
             clientThread = new ClientThread(ip, port);
             clientThread.start();
+            SPUtils.put(mContext, "ip", ip);
+            SPUtils.put(mContext, "port", port);
         } catch (IOException e) {
             e.printStackTrace();
         }
