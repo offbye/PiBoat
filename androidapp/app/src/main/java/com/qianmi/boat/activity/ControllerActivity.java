@@ -148,19 +148,21 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
             case Controller.DIRECTION_LEFT:
                 L.d("trigger left");
                 L.d("connect the server ....");
+                ControllerManager.getInstance(mContext).sendMsg("s1,80");
                 break;
 
             case Controller.DIRECTION_RIGHT:
                 L.d("trigger right");
                 L.d("sending msg...");
-                ControllerManager.getInstance(mContext).sendMsg("helloworld");
+             //   ControllerManager.getInstance(mContext).sendMsg("helloworld");
+                ControllerManager.getInstance(mContext).sendMsg("s1,20");
                 break;
 
             case Controller.DIRECTION_UP:
                 L.d("trigger up");
                 L.d("play rtsp");
                 String url = "rtsp://" + ip + ":8554/";
-                playRtspStream(url);
+                //playRtspStream(url);
                 break;
 
             case Controller.DIRECTION_DOWN:
@@ -193,6 +195,8 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
 
     @Override
     public void onThrottleTrigger(int direction) {
+        L.v("dir = "+direction);
+        ControllerManager.getInstance(mContext).sendMsg("m1,"+direction);
         switch (direction) {
             case Throttle2.T_1:
 
