@@ -1,6 +1,7 @@
 package com.qianmi.boat.widget;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -125,6 +126,13 @@ public class CheckListRelativeLayout extends LinearLayout {
     public void setListViews(List<String> list) {
         this.checkItemList.addAll(list);
         addContView();
+    }
+
+    public void setTitleName(String name) {
+        if (TextUtils.isEmpty(name)) {
+            return;
+        }
+        tvTitleName.setText(name);
     }
 
 }
