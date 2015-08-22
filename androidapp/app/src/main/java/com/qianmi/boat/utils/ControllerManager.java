@@ -1,6 +1,7 @@
 package com.qianmi.boat.utils;
 
 import android.content.Context;
+import android.os.Handler;
 
 import java.io.IOException;
 
@@ -24,9 +25,9 @@ public class ControllerManager {
         return sInstance;
     }
 
-    public void connectServer(String ip, int port) {
+    public void connectServer(String ip, int port, Context context, Handler inHandler, Handler outHandler) {
         try {
-            clientThread = new ClientThread(ip, port);
+            clientThread = new ClientThread(ip, port, context, inHandler,outHandler );
             clientThread.start();
             SPUtils.put(mContext, "ip", ip);
             SPUtils.put(mContext, "port", port);
@@ -38,18 +39,18 @@ public class ControllerManager {
     public void sendMsg(String msg) {
 
         if (clientThread != null) {
-            clientThread.setMsg(msg);
+            clientThread.Send(msg);
         } else {
             L.e("client thread is null");
         }
     }
 
-    public void shutDown() {
+    public void stopConnect() {
         if (clientThread != null) {
-            clientThread.shutDown();
-        } else {
-            L.e("client thread is null");
+            clientThread.isRun = false;
+            clientThread.close();
+            clientThread = null;
+            L.d("disconnect");
         }
     }
-
 }

@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -33,10 +34,14 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
     Throttle2 mThrottle;
     @Bind(R.id.tv_msg)
     TextView mMsg;
+    @Bind(R.id.tv_msg_control)
+    TextView mMsgControl;
 
     private Context mContext;
     private int mVHeight;
     private int mVWidth;
+    private Handler mInHandler;
+    private Handler mOutHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,7 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
 
         setContentView(R.layout.activity_controller);
         ButterKnife.bind(this);
+        initHandler();
         mContext = this;
         mControllerLeft.setTrigger(this);
         mThrottle.setThrottleTrigger(this);
@@ -66,11 +72,51 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
         showMsg("初始化...");
     }
 
+    private void initHandler() {
+        mInHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                try {
+                    if (msg.obj != null) {
+                        String s = msg.obj.toString();
+                        if (s.trim().length() > 0) {
+                            mMsgControl.setText(s);
+                        } else {
+                            L.d("没有数据返回不更新");
+                        }
+                    }
+
+                } catch (Exception e2) {
+                    e2.printStackTrace();
+                }
+            }
+        };
+
+        mOutHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                try {
+                    if (msg.obj != null) {
+                        String s = msg.obj.toString();
+                        if (msg.what == 1) {
+                            mMsgControl.setText(s + "      发送成功");
+                        } else {
+                            mMsgControl.setText(s + "      发送失败");
+                        }
+                    }
+
+                } catch (Exception e2) {
+                    e2.printStackTrace();
+                }
+            }
+        };
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mVideoView.pause();
-        ControllerManager.getInstance(mContext).shutDown();
+        ControllerManager.getInstance(mContext).stopConnect();
     }
 
     @Override
@@ -79,7 +125,7 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
             case Controller.DIRECTION_LEFT:
                 L.d("trigger left");
                 L.d("connect the server ....");
-                ControllerManager.getInstance(mContext).connectServer("192.168.43.2", 9999);
+                ControllerManager.getInstance(mContext).connectServer("192.168.43.2", 9999, mContext, mInHandler, mOutHandler);
                 break;
 
             case Controller.DIRECTION_RIGHT:
