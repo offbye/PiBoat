@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -54,11 +56,33 @@ public class CheckListRelativeLayout extends LinearLayout {
         relateiveLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(linearCont.getVisibility() == VISIBLE){
-                    linearCont.setVisibility(GONE);
-                }else{
+                if (linearCont.getVisibility() == VISIBLE) {
+                    goneLinearCont();
+                } else {
                     linearCont.setVisibility(VISIBLE);
+                    Animation animation = AnimationUtils.loadAnimation(context, R.anim.menu_visible);
+                    linearCont.startAnimation(animation);
                 }
+            }
+        });
+    }
+
+    private void goneLinearCont() {
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.menu_gone);
+        linearCont.startAnimation(animation);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                linearCont.setVisibility(GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
             }
         });
     }
@@ -86,7 +110,7 @@ public class CheckListRelativeLayout extends LinearLayout {
         }
         if (allCount == count) {
             tvTitleDetail.setTextColor(getResources().getColor(R.color.white));
-            linearCont.setVisibility(GONE);
+            goneLinearCont();
         }else{
             linearCont.setVisibility(VISIBLE);
             tvTitleDetail.setTextColor(getResources().getColor(R.color.red));
