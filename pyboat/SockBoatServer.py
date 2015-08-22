@@ -27,8 +27,9 @@ class MyStreamRequestHandlerr(StreamRequestHandler):
         while True:
             try:
                 data = self.rfile.readline().strip()
-                print "receive from (%r):%r" % (self.client_address, data)
-                self.wfile.write(data.upper())
+                if data != '':
+                    print "receive from (%r):%r" % (self.client_address, data)
+                    self.wfile.write(data.upper())
                 if data == "gps":
                     self.wfile.write(get_gps())
                 elif data[0:2] == "m1":
@@ -38,14 +39,14 @@ class MyStreamRequestHandlerr(StreamRequestHandler):
                 elif data[0:2] == "s1":
                     print("---" + data.upper())
                     pwm.servo1_set(float(data.split(",")[1]))
-
             except:
                 traceback.print_exc()
+                self.finish()
                 break
 
 
     def sayhello(self):
-        print "hello world"
+        print "hello"
         self.wfile.write("hello")
         global t        #Notice: use global variable!
         t = threading.Timer(2.0, self.sayhello)
@@ -61,12 +62,15 @@ if __name__ == "__main__":
     host = ""  # 主机名，可以是ip,像localhost的主机名,或""
     port = 9999  # 端口
     addr = (host, port)
+    try:
+        pwm = PiPWM()
 
-    pwm = PiPWM()
+        # ThreadingTCPServer从ThreadingMixIn和TCPServer继承
+        #class ThreadingTCPServer(ThreadingMixIn, TCPServer): pass
+        server = ThreadingTCPServer(addr, MyStreamRequestHandlerr)
+        server.serve_forever()
+    except KeyboardInterrupt:
+        pass
 
-    # ThreadingTCPServer从ThreadingMixIn和TCPServer继承
-    #class ThreadingTCPServer(ThreadingMixIn, TCPServer): pass
-    server = ThreadingTCPServer(addr, MyStreamRequestHandlerr)
-    server.serve_forever()
-
+    server.server_close()
     pwm.stop()

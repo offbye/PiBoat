@@ -23,37 +23,37 @@ class PiPWM():
     def __init__(self):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(12, GPIO.OUT)
-        GPIO.setup(18, GPIO.BCM)
-        GPIO.setup(16, GPIO.OUT)
+        GPIO.setup(18, GPIO.OUT)
 
         self.m1 = GPIO.PWM(12, 50)
         self.s1 = GPIO.PWM(18, 50)
-        self.s2 = GPIO.PWM(16, 50)
 
         self.m1.start(0)
+        self.s1.start(0)
+
         time.sleep(3)
         self.m1.ChangeDutyCycle(5)
-        time.sleep(2)
-        self.m1.ChangeDutyCycle(6)
-
+        self.s1.ChangeDutyCycle(5)
+        time.sleep(1)
 
     def stop(self):
         self.m1.stop()
         self.s1.stop()
         GPIO.cleanup()
 
-    def start(self, m1):
-        m1.start(0)
-        time.sleep(5)
-        m1.ChangeDutyCycle(5)
-        time.sleep(5)
-        m1.ChangeDutyCycle(9)
-        time.sleep(5)
+    def start(self):
+        self.m1.start(0)
+        time.sleep(0.02)
+        self.m1.ChangeDutyCycle(5)
+        time.sleep(0.02)
 
     def motor_set(self, percent):
         if 0 < percent < 100:
-            speed_percent = 5 + 5 * (percent / 100)
+            speed_percent = 5 + 2 * (percent / 100)
+            print(speed_percent)
             self.m1.ChangeDutyCycle(speed_percent)
+            print("motor_set: " + str(speed_percent))
+
             time.sleep(0.02)
             return "ok"
         else:
@@ -61,9 +61,10 @@ class PiPWM():
 
     def servo1_set(self, percent):
         if 0 < percent < 100:
-            speed_percent = 5 + 5 * (percent / 100)
+            speed_percent = 4 + 6 * (percent / 100)
             self.s1.ChangeDutyCycle(speed_percent)
-            time.sleep(0.02)
+            time.sleep(1)
+            print("servo1_set: " + str(speed_percent))
             return "ok"
         else:
             return "invalid percent"
@@ -72,7 +73,7 @@ if __name__ == "__main__":
     pwm1 = PiPWM()
     try:
         while 1:
-            time.sleep(5)
+            time.sleep(2)
             i = float(raw_input("speed?(5-10)"))
             pwm1.servo1_set(i)
             print("------" + str(i))
