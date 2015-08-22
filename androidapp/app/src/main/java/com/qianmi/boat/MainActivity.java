@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.qianmi.boat.activity.CheckActivity;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         mDialog.show();
         mDialog.getWindow().setContentView(R.layout.input_url);
         EditText ipV = (EditText) mDialog.getWindow().findViewById(R.id.host);
-        ipV.setText((String)SPUtils.get(mContext, "ip", ""));
+        ipV.setText((String) SPUtils.get(mContext, "ip", ""));
         EditText portV = (EditText) mDialog.getWindow().findViewById(R.id.port);
         portV.setText(String.valueOf((int) SPUtils.get(mContext, "port", 9999)));
         mDialog.getWindow()
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
                         mDialog.dismiss();
                     }
                 });
+        mDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
     @OnClick(R.id.navi)
