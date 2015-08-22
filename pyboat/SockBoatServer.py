@@ -37,7 +37,7 @@ class MyStreamRequestHandlerr(StreamRequestHandler):
 
                 elif data[0:2] == "s1":
                     print("---" + data.upper())
-                    pwm.servo1_set(10)
+                    pwm.servo1_set(float(data.split(",")[1]))
 
             except:
                 traceback.print_exc()
@@ -68,3 +68,5 @@ if __name__ == "__main__":
     #class ThreadingTCPServer(ThreadingMixIn, TCPServer): pass
     server = ThreadingTCPServer(addr, MyStreamRequestHandlerr)
     server.serve_forever()
+
+    pwm.stop()

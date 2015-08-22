@@ -21,14 +21,14 @@ if __name__ == "__main__":
 
 class PiPWM():
     def __init__(self):
-        GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BCM)
         GPIO.setup(12, GPIO.OUT)
+        GPIO.setup(18, GPIO.BCM)
         GPIO.setup(16, GPIO.OUT)
-        GPIO.setup(18, GPIO.OUT)
 
         self.m1 = GPIO.PWM(12, 50)
-        self.s1 = GPIO.PWM(16, 50)
-        self.s2 = GPIO.PWM(18, 50)
+        self.s1 = GPIO.PWM(18, 50)
+        self.s2 = GPIO.PWM(16, 50)
 
         self.m1.start(0)
         time.sleep(3)
@@ -67,3 +67,15 @@ class PiPWM():
             return "ok"
         else:
             return "invalid percent"
+
+if __name__ == "__main__":
+    pwm1 = PiPWM()
+    try:
+        while 1:
+            time.sleep(5)
+            i = float(raw_input("speed?(5-10)"))
+            pwm1.servo1_set(i)
+            print("------" + str(i))
+    except KeyboardInterrupt:
+        pass
+    pwm1.stop()
