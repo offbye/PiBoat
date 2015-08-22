@@ -49,11 +49,19 @@ public class MapActivity extends AppCompatActivity {
     public MyLocationListenner myListener = new MyLocationListenner();
     private MyLocationConfiguration.LocationMode mCurrentMode;
     BitmapDescriptor mCurrentMarker;
+    private LatLng tempLatLng;
 
     MapView mMapView;
     BaiduMap mBaiduMap;
     boolean isFirstLoc = true;// 是否首次定位
     boolean isFirstCanvas = true;
+
+    private int count = 15;
+    private int currCount = 0;
+    int ax = 1;
+    int ay = 3;
+    int bx = 1;
+    int by = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +84,21 @@ public class MapActivity extends AppCompatActivity {
 
     }
 
+    public void addCustomEleemntsDemo(List<LatLng> latLngList) {
+        List<LatLng> points = new ArrayList<LatLng>();
+        points.addAll(latLngList);
+        OverlayOptions ooPolyline = new PolylineOptions().width(10)
+                .color(0xAAFF0000).points(points);
+        mBaiduMap.addOverlay(ooPolyline);
+    }
+
     public void addCustomEleemntsDemo(LatLng latLng) {
         if (lastLatLng == null) {
             lastLatLng = latLng;
             return;
-        } else {
+        } else if((latLng.longitude == lastLatLng.longitude)&&(latLng.latitude == lastLatLng.latitude)) {
+            return;
+        }else {
             addCustomElementsDemo(lastLatLng, latLng);
             lastLatLng = latLng;
         }
@@ -98,20 +116,36 @@ public class MapActivity extends AppCompatActivity {
             if (location == null || mMapView == null)
                 return;
             curLocation = location;
-           /* MyLocationData locData = new MyLocationData.Builder()
-                    .accuracy(location.getRadius())
-                            // 此处设置开发者获取到的方向信息，顺时针0-360
-                    .direction(100).latitude(location.getLatitude())
-                    .longitude(location.getLongitude()).build();
-            mBaiduMap.setMyLocationData(locData);*/
             if (isFirstCanvas) {
                 if (location.getLatitude() > 10 && location.getLongitude() > 10) {
 //                    isFirstCanvas = false;
                     // addCustomElementsDemo((location.getLatitude()), (location.getLongitude()));
-                    addCustomEleemntsDemo(new LatLng(location.getLatitude() + (5 + new Random().nextInt(10)) / 100f, location.getLongitude() + (5 + new Random().nextInt(10)) / 100f));
+                    if(tempLatLng == null) {
+                        tempLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    }else{
+                        currCount ++;
+                        if(currCount % 45 == 0) {
+                            currCount = 0;
+                        }else if (currCount % 30 == 0) {
+                            ax = -ax;
+                        }else if (currCount % 15 == 0) {
+                            bx = - bx;
+                        }
+                        tempLatLng = new LatLng(tempLatLng.latitude + (ax + new Random().nextInt(ay)) / 10000f, tempLatLng.longitude + (bx + new Random().nextInt(by)) / 10000f);
+                    }
+                    curLocation.setLatitude(tempLatLng.latitude);
+                    curLocation.setLongitude(tempLatLng.longitude);
+                    addCustomEleemntsDemo(tempLatLng);
                     Log.v(Tag, "location = " + location.getLatitude() + "  唯独" + location.getLongitude());
+
+                    MyLocationData locData = new MyLocationData.Builder()
+                            .accuracy(curLocation.getRadius())
+                            .direction(100).latitude(curLocation.getLatitude())
+                            .longitude(curLocation.getLongitude()).build();
+                    mBaiduMap.setMyLocationData(locData);
                 }
             }
+
             if (isFirstLoc) {
                 isFirstLoc = false;
                 LatLng ll = new LatLng(location.getLatitude(),
@@ -162,10 +196,6 @@ public class MapActivity extends AppCompatActivity {
                         .direction(100).latitude(curLocation.getLatitude())
                         .longitude(curLocation.getLongitude()).build();
                 mBaiduMap.setMyLocationData(locData);
-
-               /* MapStatus ms = new MapStatus.Builder(mBaiduMap.getMapStatus()).rotate(0).build();
-                MapStatusUpdate u = MapStatusUpdateFactory.newMapStatus(ms);
-                mBaiduMap.animateMapStatus(u);*/
             }
         });
         btnRoate.setOnClickListener(new View.OnClickListener() {

@@ -45,7 +45,7 @@
         </activity>
         <activity
             android:name=".activity.MapActivity"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/title_activity_map" >
         </activity>
         <service
             android:name="com.baidu.location.f"
