@@ -99,6 +99,7 @@ public class CheckListRelativeLayout extends LinearLayout {
                 }
             });
         }
+        refreshView();
     }
 
     private void refreshView() {

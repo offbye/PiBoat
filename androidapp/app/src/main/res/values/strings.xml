@@ -6,5 +6,6 @@
     <string name="title_activity_controller">ControllerActivity</string>
     <string name="title_activity_navigation">NavigationActivity</string>
     <string name="title_activity_check">CheckActivity</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">检查清单</string>
+    <string name="title_activity_map">滑行记录</string>
 </resources>

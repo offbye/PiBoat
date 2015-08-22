@@ -116,12 +116,6 @@ public class MapActivity extends AppCompatActivity {
             if (location == null || mMapView == null)
                 return;
             curLocation = location;
-           /* MyLocationData locData = new MyLocationData.Builder()
-                    .accuracy(location.getRadius())
-                            // 此处设置开发者获取到的方向信息，顺时针0-360
-                    .direction(100).latitude(location.getLatitude())
-                    .longitude(location.getLongitude()).build();
-            mBaiduMap.setMyLocationData(locData);*/
             if (isFirstCanvas) {
                 if (location.getLatitude() > 10 && location.getLongitude() > 10) {
 //                    isFirstCanvas = false;
@@ -139,10 +133,19 @@ public class MapActivity extends AppCompatActivity {
                         }
                         tempLatLng = new LatLng(tempLatLng.latitude + (ax + new Random().nextInt(ay)) / 10000f, tempLatLng.longitude + (bx + new Random().nextInt(by)) / 10000f);
                     }
+                    curLocation.setLatitude(tempLatLng.latitude);
+                    curLocation.setLongitude(tempLatLng.longitude);
                     addCustomEleemntsDemo(tempLatLng);
                     Log.v(Tag, "location = " + location.getLatitude() + "  唯独" + location.getLongitude());
+
+                    MyLocationData locData = new MyLocationData.Builder()
+                            .accuracy(curLocation.getRadius())
+                            .direction(100).latitude(curLocation.getLatitude())
+                            .longitude(curLocation.getLongitude()).build();
+                    mBaiduMap.setMyLocationData(locData);
                 }
             }
+
             if (isFirstLoc) {
                 isFirstLoc = false;
                 LatLng ll = new LatLng(location.getLatitude(),
