@@ -128,12 +128,12 @@ public class MapActivity extends AppCompatActivity {
                         tempLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                     }else{
                         currCount ++;
-                        if(currCount % 45 == 0){
-
+                        if(currCount % 45 == 0) {
+                            currCount = 0;
                         }else if (currCount % 30 == 0) {
-
+                            ax = -ax;
                         }else if (currCount % 15 == 0) {
-                            by = -by;
+                            bx = - bx;
                         }
                         tempLatLng = new LatLng(tempLatLng.latitude + (ax + new Random().nextInt(ay)) / 10000f, tempLatLng.longitude + (bx + new Random().nextInt(by)) / 10000f);
                     }
