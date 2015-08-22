@@ -33,7 +33,19 @@ Not finished, use serial gather GEO inof from a Ublox GPS 6M module.
 Use Socket connect to Respberry Pi, use Vitamio play video stream.
 
 
+# Usage
+
+* Install a lastest Respbian System, we use 2015-05-05-raspbian-wheezy.img, and start it success.
+
+* Connect ESC signal line to GPIO12, Ground line to Pi GPIO6
+* Connect Servo signal line  to GPIO18
+* Connect  Respberry Pi Camera Module  ，then run `sudo apt-get install vlc`
+
+* run 'sodu python SockBoatServer.py ' start the socket server.
+* run Android app and controll the boat.
+
 The project is open source under Apache Lincinse, you play with it feel free.
+
 
 
  
