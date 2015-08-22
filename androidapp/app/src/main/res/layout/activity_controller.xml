@@ -17,10 +17,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true" />
 
-    <com.qianmi.boat.widget.Throttle
+    <com.qianmi.boat.widget.Throttle2
         android:id="@+id/throttle_right"
         android:layout_width="50dp"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true" />
 

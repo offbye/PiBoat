@@ -13,12 +13,12 @@ import com.qianmi.boat.R;
 import com.qianmi.boat.utils.ControllerManager;
 import com.qianmi.boat.utils.L;
 import com.qianmi.boat.widget.Controller;
-import com.qianmi.boat.widget.Throttle;
+import com.qianmi.boat.widget.Throttle2;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ControllerActivity extends Activity implements Controller.Trigger, Throttle.ThrottleTrigger, MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
+public class ControllerActivity extends Activity implements Controller.Trigger, Throttle2.ThrottleTrigger, MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
 
     private static final String TEST_URL = "rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp";
 
@@ -30,7 +30,7 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
     @Bind(R.id.video)
     VideoView mVideoView;
     @Bind(R.id.throttle_right)
-    Throttle mThrottle;
+    Throttle2 mThrottle;
     @Bind(R.id.tv_msg)
     TextView mMsg;
 
@@ -52,7 +52,14 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
         mVideoView.setOnInfoListener(new MediaPlayer.OnInfoListener() {
             @Override
             public boolean onInfo(MediaPlayer mp, int what, int extra) {
-                return false;
+                showMsg("缓冲数据...");
+                new Handler(mContext.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        showMsg("");
+                    }
+                }, 3000);
+                return true;
             }
         });
 
@@ -62,6 +69,7 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mVideoView.pause();
         ControllerManager.getInstance(mContext).shutDown();
     }
 
@@ -107,12 +115,6 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
     @Override
     public void onPrepared(MediaPlayer mp) {
         showMsg("连接成功");
-        new Handler(mContext.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                showMsg("");
-            }
-        }, 1000);
 
         mVHeight = mp.getVideoHeight();
         mVWidth = mp.getVideoWidth();
@@ -121,11 +123,24 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
 
     @Override
     public void onThrottleTrigger(int direction) {
+        switch (direction) {
+            case Throttle2.T_1:
 
+                break;
+
+            case Throttle2.T_2:
+
+                break;
+
+            case Throttle2.T_3:
+
+                break;
+        }
     }
 
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
-        return false;
+        showMsg("连接错误");
+        return true;
     }
 }
