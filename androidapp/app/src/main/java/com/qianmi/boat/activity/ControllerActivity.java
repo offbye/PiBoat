@@ -36,6 +36,10 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
     Throttle2 mThrottle;
     @Bind(R.id.throttle_normal)
     ThrottleBar throttleBar;
+
+    @Bind(R.id.throttle_servo)
+    ThrottleBar servoBar;
+
     @Bind(R.id.tv_msg)
     TextView mMsg;
     @Bind(R.id.tv_msg_control)
@@ -60,6 +64,15 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
         mControllerLeft.setTrigger(this);
         mThrottle.setThrottleTrigger(this);
         throttleBar.setThrottleTrigger(this);
+        servoBar.setThrottleTrigger(new ThrottleBar.ThrottleTrigger() {
+            @Override
+            public void onThrottleTrigger(int direction) {
+                ControllerManager.getInstance(mContext).sendMsg("s1,"+direction);
+            }
+        });
+        servoBar.setPosition(50);
+
+
         mVideoView.setOnPreparedListener(this);
         mVideoView.setOnErrorListener(this);
         mVideoView.setOnInfoListener(new MediaPlayer.OnInfoListener() {

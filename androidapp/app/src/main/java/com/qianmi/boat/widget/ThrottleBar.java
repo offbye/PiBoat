@@ -66,4 +66,10 @@ public class ThrottleBar extends LinearLayout {
     public interface ThrottleTrigger {
         void onThrottleTrigger(int direction);
     }
+
+    public void setPosition(int position){
+        if (mySeekBarView != null){
+            mySeekBarView.setProgress(position);
+        }
+    }
 }

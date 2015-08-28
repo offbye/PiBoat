@@ -15,6 +15,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_alignParentBottom="true"
+        android:visibility="gone"
         android:layout_alignParentLeft="true" />
 
     <com.qianmi.boat.widget.Throttle2
@@ -26,9 +27,19 @@
         android:layout_alignParentRight="true" />
 
     <com.qianmi.boat.widget.ThrottleBar
+        android:id="@+id/throttle_servo"
+        android:layout_width="35dp"
+        android:layout_height="200dp"
+        android:paddingBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:paddingTop="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"/>
+
+    <com.qianmi.boat.widget.ThrottleBar
         android:id="@+id/throttle_normal"
         android:layout_width="35dp"
-        android:layout_height="180dp"
+        android:layout_height="200dp"
         android:paddingBottom="15dp"
         android:layout_marginRight="15dp"
         android:paddingTop="15dp"
