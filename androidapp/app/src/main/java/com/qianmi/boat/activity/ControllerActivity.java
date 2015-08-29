@@ -67,10 +67,11 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
         servoBar.setThrottleTrigger(new ThrottleBar.ThrottleTrigger() {
             @Override
             public void onThrottleTrigger(int direction) {
-                ControllerManager.getInstance(mContext).sendMsg("s1,"+direction);
+                ControllerManager.getInstance(mContext).sendMsg("s1," + (direction * 10));
             }
         });
-        servoBar.setPosition(50);
+        servoBar.setMax(10);
+        servoBar.setPosition(5);
 
 
         mVideoView.setOnPreparedListener(this);
@@ -209,20 +210,8 @@ public class ControllerActivity extends Activity implements Controller.Trigger, 
     @Override
     public void onThrottleTrigger(int direction) {
         L.v("dir = "+direction);
-        ControllerManager.getInstance(mContext).sendMsg("m1,"+direction);
-        switch (direction) {
-            case Throttle2.T_1:
+        ControllerManager.getInstance(mContext).sendMsg("m1,"+ (direction * 10));
 
-                break;
-
-            case Throttle2.T_2:
-
-                break;
-
-            case Throttle2.T_3:
-
-                break;
-        }
     }
 
     @Override

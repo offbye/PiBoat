@@ -37,7 +37,7 @@ public class ThrottleBar extends LinearLayout {
         mySeekBarView.setProgressDrawable(null);
         mySeekBarView.setThumb(getResources().getDrawable(R.drawable.thumb));
         this.addView(mySeekBarView, params);
-        mySeekBarView.setMax(100);
+        mySeekBarView.setMax(10);
         mySeekBarView.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -67,6 +67,11 @@ public class ThrottleBar extends LinearLayout {
         void onThrottleTrigger(int direction);
     }
 
+    public void setMax(int max){
+        if (mySeekBarView != null){
+            mySeekBarView.setMax(max);
+        }
+    }
     public void setPosition(int position){
         if (mySeekBarView != null){
             mySeekBarView.setProgress(position);
