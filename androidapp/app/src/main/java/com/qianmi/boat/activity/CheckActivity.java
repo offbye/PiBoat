@@ -1,18 +1,54 @@
 package com.qianmi.boat.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.qianmi.boat.R;
+import com.qianmi.boat.utils.ControllerManager;
 
 public class CheckActivity extends AppCompatActivity {
 
+    private Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check);
+        mContext =this;
+
+        Button  buttonReboot = (Button)findViewById(R.id.buttonReboot);
+        buttonReboot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ControllerManager.getInstance(mContext).sendMsg("reboot");
+
+            }
+        });
+
+        Button  buttonShutdown = (Button)findViewById(R.id.buttonShutdown);
+        buttonShutdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ControllerManager.getInstance(mContext).sendMsg("halt");
+
+            }
+        });
+
+        Button  buttonRstp = (Button)findViewById(R.id.buttonRtsp);
+        buttonRstp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ControllerManager.getInstance(mContext).sendMsg("rtsp");
+
+            }
+        });
     }
 
     @Override

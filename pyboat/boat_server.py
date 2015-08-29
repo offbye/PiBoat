@@ -1,6 +1,6 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python
 # -*- encoding: UTF-8 -*-
-# SockBoatServer created on 15/8/21 下午3:49 
+# SockBoatServer created on 15/8/30 下午3:49
 # Copyright 2014 offbye@gmail.com
 
 
@@ -13,7 +13,8 @@ __author__ = ['"Xitao":<offbye@gmail.com>']
 from SocketServer import ThreadingTCPServer, StreamRequestHandler
 import traceback
 import threading
-# from pi_pwm import  PiPWM
+import os
+from pi_pwm import  PiPWM
 
 
 timer_interval = 2
@@ -32,15 +33,21 @@ class MyStreamRequestHandlerr(StreamRequestHandler):
                     self.wfile.write(data.upper())
                 if data == "gps":
                     self.wfile.write(get_gps())
+                elif data == "reboot":
+                    os.system('reboot')
+                elif data == "halt":
+                    os.system('halt')
+                elif data == "rtsp":
+                    os.system("raspivid -o - -w 640 -h 360 -t 9999999 |cvlc -vvv stream:///dev/stdin --sout '#rtp{sdp=rtsp://:8554/}' :demux=h264 & ")
                 elif data[0:2] == "m1":
                     print("---" + data.upper())
-                    # pwm.motor_set(float(data.split(",")[1]))
+                    pwm.motor_set(float(data.split(",")[1]))
 
                 elif data[0:2] == "s1":
                     print("---" + data.upper())
-                    # pwm.servo1_set(float(data.split(",")[1]))
+                    pwm.servo1_set(float(data.split(",")[1]))
 
-            except KeyboardInterrupt:
+            except:
                 traceback.print_exc()
                 self.finish()
                 break
@@ -64,7 +71,7 @@ if __name__ == "__main__":
     port = 9999  # 端口
     addr = (host, port)
     try:
-        # pwm = PiPWM()
+        pwm = PiPWM()
 
         # ThreadingTCPServer从ThreadingMixIn和TCPServer继承
         #class ThreadingTCPServer(ThreadingMixIn, TCPServer): pass
@@ -74,4 +81,4 @@ if __name__ == "__main__":
         pass
 
     server.server_close()
-    # pwm.stop()
+    pwm.stop()

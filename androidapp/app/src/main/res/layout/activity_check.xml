@@ -7,11 +7,34 @@
     tools:context="com.qianmi.boat.activity.CheckActivity">
 
     <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-<!--
-    <com.qianmi.boat.widget.SmallBaiduMap
-        android:layout_width="150dp"
-        android:layout_height="150dp"/>
--->
+        android:layout_height="wrap_content"
+        android:id="@+id/textView" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="重启"
+        android:id="@+id/buttonReboot"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="63dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="关机"
+        android:id="@+id/buttonShutdown"
+        android:layout_below="@+id/buttonReboot"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="71dp" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="视频"
+        android:id="@+id/buttonRtsp"
+        android:layout_below="@+id/buttonShutdown"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="71dp" />
+
 
 </RelativeLayout>

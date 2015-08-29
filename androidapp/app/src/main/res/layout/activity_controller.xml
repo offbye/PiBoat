@@ -29,7 +29,7 @@
     <com.qianmi.boat.widget.ThrottleBar
         android:id="@+id/throttle_servo"
         android:layout_width="35dp"
-        android:layout_height="200dp"
+        android:layout_height="230dp"
         android:paddingBottom="15dp"
         android:layout_marginRight="15dp"
         android:paddingTop="15dp"
@@ -39,7 +39,7 @@
     <com.qianmi.boat.widget.ThrottleBar
         android:id="@+id/throttle_normal"
         android:layout_width="35dp"
-        android:layout_height="200dp"
+        android:layout_height="230dp"
         android:paddingBottom="15dp"
         android:layout_marginRight="15dp"
         android:paddingTop="15dp"
