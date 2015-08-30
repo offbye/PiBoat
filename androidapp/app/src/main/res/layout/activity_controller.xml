@@ -22,8 +22,7 @@
         android:id="@+id/throttle_right"
         android:layout_width="50dp"
         android:layout_height="100dp"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true" />
 
     <com.qianmi.boat.widget.ThrottleBar

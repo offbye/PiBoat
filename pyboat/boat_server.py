@@ -13,7 +13,7 @@ __author__ = ['"Xitao":<offbye@gmail.com>']
 from SocketServer import ThreadingTCPServer, StreamRequestHandler
 import traceback
 import threading
-import os
+import os,sys
 from pi_pwm import  PiPWM
 
 
@@ -35,8 +35,10 @@ class MyStreamRequestHandlerr(StreamRequestHandler):
                     self.wfile.write(get_gps())
                 elif data == "reboot":
                     os.system('reboot')
+                    sys.exit()
                 elif data == "halt":
-                    os.system('halt')
+                    os.system("shutdown -r -t 5 now")
+                    sys.exit()
                 elif data == "rtsp":
                     os.system("raspivid -o - -w 640 -h 360 -t 9999999 |cvlc -vvv stream:///dev/stdin --sout '#rtp{sdp=rtsp://:8554/}' :demux=h264 & ")
                 elif data[0:2] == "m1":
