@@ -1,0 +1,29 @@
+#!/bin/bash
+# /etc/init.d/piboat
+
+### BEGIN INIT INFO
+# Provides: piboat
+# Required-Start: $remote_fs $syslog
+# Required-Stop: $remote_fs $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description:  initscript
+# Description: This service is used to manage a led
+### END INIT INFO
+
+case "$1" in
+    start)
+        echo "Starting PiBoat"
+        /home/pi/piboat.py &
+        ;;
+    stop)
+        echo "Stopping piboat"
+        #killall piboat.py
+        kill $(ps aux | grep -m 1 'python /home/pi/piboat.py' | awk '{ print $2 }')
+        ;;
+    *)
+        echo "Usage: service piboat start|stop"
+        exit 1
+        ;;
+esac
+exit 0
