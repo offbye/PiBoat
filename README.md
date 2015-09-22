@@ -28,10 +28,15 @@ Use Python and RPi.GPIO pwm control servo
 
 Not finished, use serial gather GEO inof from a Ublox GPS 6M module.
 
-#5. Android App
+
+#5. Install WiFi Hostspot
+Plug a usb wifi card  to Pi's USB port
+run shell script  `sudo ./ap_setup.sh` , it will help you configure a WiFi Hotspot.
+
+#6. Android App
 
 Use Socket connect to Respberry Pi, use Vitamio play video stream.
-
+Install the App to your phone, and connect the Wifi Hotspot your created. 
 
 # Usage
 
